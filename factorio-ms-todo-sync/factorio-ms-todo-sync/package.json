@@ -1,0 +1,25 @@
+{
+  "name": "factorio-ms-todo-sync",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Factorio \u2192 Microsoft To Do sync via Graph API (device code auth) with RCON round-trip test.",
+  "scripts": {
+    "start": "node sync.mjs --once",
+    "auth": "node sync.mjs --auth",
+    "print-list": "node sync.mjs --print-default-list",
+    "list-tasks": "node sync.mjs --list-tasks 10",
+    "watch": "node sync.mjs --watch",
+    "rcon:test": "node sync.mjs --rcon-test \"Hello from Codespaces\""
+  },
+  "dependencies": {
+    "@azure/msal-node": "^2.7.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "isomorphic-fetch": "^3.0.0",
+    "luxon": "^3.5.0",
+    "chokidar": "^3.6.0",
+    "yargs": "^17.7.2",
+    "rcon-client": "^4.2.5",
+    "dotenv": "^16.4.5"
+  }
+}
