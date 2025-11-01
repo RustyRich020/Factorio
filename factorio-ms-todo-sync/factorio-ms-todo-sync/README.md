@@ -12,6 +12,8 @@ This repo syncs Factorio task change events to **Microsoft To Do** using **devic
   - Optional **RCON** integration: send `/todo add "<title>" ##meta={...}` to Factorio
 - `package.json` with scripts for common actions
 - `test/sample_changes.jsonl` to dry-run without Factorio
+- `sync.tmpl` contains the raw `<SYNC_CONTENT>...</SYNC_CONTENT>` fragment. `sync.mjs` now reads this template and exports it as `syncContent` (named export), provides a default export for compatibility, and an async loader `loadSyncContent()` for consumers that prefer async I/O.
+- A lightweight test script was added: run `npm test` to execute `test/sync.test.mjs`, which validates the template export.
 
 ---
 
@@ -141,3 +143,31 @@ You should see `/todo add "Hello from Codespaces"` executed in-game.
 - Persist a mapping `localId ↔ externalId` file for faster updates.
 - Add backfill: pull Graph tasks and mirror into Factorio (two-way).
 - Queue/debounce to batch writes if the change-log is very chatty.
+
+## CLI examples and dry-run mode
+
+You can run the included CLI commands directly via the `npm` scripts. To avoid network calls (useful for testing or CI), use the `--dry-run` flag after the script name.
+
+- Run the device-code auth flow (interactive):
+
+```bash
+npm run auth -- --dry-run   # simulate auth without contacting MSAL
+npm run auth               # perform real device-code auth (requires CLIENT_ID)
+```
+
+- List tasks (will prompt for auth if needed):
+
+```bash
+npm run list-tasks -- --dry-run --list-tasks 10  # simulate listing tasks
+npm run list-tasks -- --list-tasks 10           # real run
+```
+
+- RCON round-trip test (simulated):
+
+```bash
+npm run rcon:test -- --dry-run --rcon-test "Hello from Codespaces"
+```
+
+Notes:
+- To pass extra flags to the script when using `npm run`, put `--` after the script name (as shown above).
+- `--dry-run` prevents network calls and side-effects; the CLI will print what it would do instead.
