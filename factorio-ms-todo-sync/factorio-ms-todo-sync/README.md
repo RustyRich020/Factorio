@@ -88,21 +88,32 @@ This will create one task using your account.
 
 ---
 
-## 6) Point to Factorio’s live change-log
+## 6) Point to Factorio's live change-log
 
-On Windows the default is:
-```
+The mod writes changes to a JSONL file in Factorio's script-output directory:
+
+On Windows, the default path is:
+
+```bash
 %AppData%\Factorio\script-output\todo\changes.jsonl
 ```
 
-If yours is different, set `CHANGELOG_FILE` in `.env`.
+You can override this in your `.env`:
+
+```env
+# Override only if needed:
+FACTORIO_SCRIPT_OUTPUT=C:\Users\<you>\AppData\Roaming\Factorio\script-output
+CHANGELOG_FILE=C:\Users\<you>\AppData\Roaming\Factorio\script-output\todo\changes.jsonl
+```
 
 To **process existing lines once**:
+
 ```bash
 npm run start
 ```
 
 To **watch live** as the mod appends lines:
+
 ```bash
 npm run watch
 ```
@@ -120,6 +131,7 @@ RCON_PASSWORD=your_rcon_password
 ```
 
 Then run:
+
 ```bash
 npm run rcon:test
 ```
@@ -169,5 +181,6 @@ npm run rcon:test -- --dry-run --rcon-test "Hello from Codespaces"
 ```
 
 Notes:
+
 - To pass extra flags to the script when using `npm run`, put `--` after the script name (as shown above).
 - `--dry-run` prevents network calls and side-effects; the CLI will print what it would do instead.
